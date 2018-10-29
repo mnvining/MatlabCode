@@ -58,6 +58,9 @@ function [stab]=RUNGraphCos(NG,Al,n,cl,opt,NoMo)
     Cin=Res(1:end-2);
     %Cin=A\ef';
     %Cin=[A*D_Dag']\BB';
+    figure(52)
+    loglog(U'*AugVec,S_Dag,'o','MarkerSize',6)
+    
 
     Uex=real(B*D_Dag*Cin);
     U2=real(A*Cin);
