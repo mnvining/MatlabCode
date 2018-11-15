@@ -75,7 +75,8 @@ function [stab,acc,acc2]=RUNG(NG,Al,n,d,cl,NoMo,lambda,opt)
     
     
     % U1 is uc
-    U1=real(A*D_Dag'*Cin+Res(end-1)*Eh1f'+Res(end)*Eh2f');
+    %U1=real(A*D_Dag'*Cin+Res(end-1)*Eh1f'+Res(end)*Eh2f');
+    U1=real(A*D_Dag'*Cin);
 
 %     
     figure(22)
