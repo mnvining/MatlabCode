@@ -11,8 +11,9 @@ function [stab,acc,acc2,AugMat,Eh1f,Eh2f]=RUNG(NG,Al,n,d,cl,NoMo,lambda,opt)
 
     syms x
 
-    xx=linspace(-1,1,NG);
+    xx=linspace(-1,1,NG+1);
     xx=xx(1:end-1);
+    xx(end)
     h=xx(2)-xx(1);
     x2=-1:h:1+cl-h;
     xcoarse1=linspace(-1,1,n);
@@ -27,17 +28,17 @@ function [stab,acc,acc2,AugMat,Eh1f,Eh2f]=RUNG(NG,Al,n,d,cl,NoMo,lambda,opt)
     ZZ=length(x2);
     Modes=[1:M+1,ZZ-M+1:ZZ];
 
-    A=createFWDcont(NG-1,Modes,cl,ZZ);
+    A=createFWDcont(NG,Modes,cl,ZZ);
 
     [EGGf,Eh1f,Eh2f]=BCoeffCalc(xx,xcoarse,Al,d);
     
-    D=createId2Derivative(ZZ,NG-1,M,Al,cl);
+    D=createId2Derivative(ZZ,NG,M,Al,cl);
     
     D_Dag=pinv(D,1e-13);
 
     AugVec=[lambda*ef';EGGf'];
     
-    AugMat=[lambda*A,zeros(NG-1,2); A*D_Dag,Eh1f',Eh2f'];
+    AugMat=[lambda*A,zeros(NG,2); A*D_Dag,Eh1f',Eh2f'];
     %AugMat=[lambda*A;A*D_Dag'];
   
     [U,S,V]=svd(AugMat);
@@ -49,9 +50,9 @@ function [stab,acc,acc2,AugMat,Eh1f,Eh2f]=RUNG(NG,Al,n,d,cl,NoMo,lambda,opt)
 
  
     
-    figure(90)
-    loglog(real(U'*AugVec),real(S_Dag),'o','MarkerSize',6)
-    title('decay of singular vals')
+    %figure(90)
+    %loglog(real(U'*AugVec),real(S_Dag),'o','MarkerSize',6)
+    %title('decay of singular vals')
     
     % U2 is fc 
     U2=real(A*Cin);
@@ -77,12 +78,12 @@ function [stab,acc,acc2,AugMat,Eh1f,Eh2f]=RUNG(NG,Al,n,d,cl,NoMo,lambda,opt)
     LD=round(NG/(n-1));
     solcoarse=U1(1:LD:end);
 
-    figure(43)
-    semilogy(abs(U2-ef'))
-    title('norm f fc')
-    figure(91)
-    semilogy(abs(U1-EGGf'))
-    title('norm uc greens')
+    %figure(43)
+    %semilogy(abs(U2-ef'))
+    %title('norm f fc')
+    %figure(91)
+    %semilogy(abs(U1-EGGf'))
+    %title('norm uc greens')
   
     stab=norm(solcoarse)/norm(efff);
 end

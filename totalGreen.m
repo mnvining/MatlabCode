@@ -4,7 +4,7 @@ function Gf=totalGreen(d,n,Al)
     expr=0*x;
     zz=coeffcalc(d,n);
     for j=1:length(zz)
-        m(x)=GreensInt(j-1,Al);
+        m(x)=GreensInt2(j-1,Al);
         expr=expr+zz(j)*m(x);
     end
     Gf= expr;
