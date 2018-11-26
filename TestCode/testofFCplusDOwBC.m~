@@ -6,12 +6,11 @@ h=2/(n-1);      x=[-1:h:1]';
 h1=exp((-x-1)/sqrt(alpha));
 h2=exp((x-1)/sqrt(alpha));
 z=[1,0,0,0];
+y=x.^3;     yu=PS=z(1)*xx.^3+z(2)*xx.^2+(z(3)+6*z(1)*Al)*xx+(z(4)+2*z(2)*Al);
+
 Al=alpha;
-y=x.^3;     yu=z(1)*x.^3+z(2)*x.^2+(z(3)+6*z(1)*Al)*x+(z(4)+2*z(2)*Al);
-
-
 for j=1:length(x)
-GI(j)=6*Al^2*(exp(1/sqrt(Al)))^3/(((exp(1/sqrt(Al)))^4-1)*exp(x(j)/sqrt(Al)))-6*exp(x(j)/sqrt(Al))*Al^2*exp(1/sqrt(Al))/((exp(1/sqrt(Al)))^4-1)+Al*(exp(1/sqrt(Al)))^3/(((exp(1/sqrt(Al)))^4-1)*exp(x(j)/sqrt(Al)))-exp(x(j)/sqrt(Al))*Al*exp(1/sqrt(Al))/((exp(1/sqrt(Al)))^4-1)-6*exp(x(j)/sqrt(Al))*Al^2*(exp(1/sqrt(Al)))^3/((exp(1/sqrt(Al)))^4-1)-exp(x(j)/sqrt(Al))*Al*(exp(1/sqrt(Al)))^3/((exp(1/sqrt(Al)))^4-1)+6*Al^2*exp(1/sqrt(Al))/(((exp(1/sqrt(Al)))^4-1)*exp(x(j)/sqrt(Al)))+Al*exp(1/sqrt(Al))/(((exp(1/sqrt(Al)))^4-1)*exp(x(j)/sqrt(Al)))-Al*x(j)^3/((exp(1/sqrt(Al)))^4-1)-6*Al^2*x(j)/((exp(1/sqrt(Al)))^4-1)+(exp(1/sqrt(Al)))^4*Al*x(j)^3/((exp(1/sqrt(Al)))^4-1)+6*(exp(1/sqrt(Al)))^4*Al^2*x(j)/((exp(1/sqrt(Al)))^4-1);
+GI(j)=6*Al^2*(exp(1/sqrt(Al)))^3/(((exp(1/sqrt(Al)))^4-1)*exp(x(j)/sqrt(Al)))-6*exp(x(j)/sqrt(Al))*Al^2*exp(1/sqrt(Al))/((exp(1/sqrt(Al)))^4-1)+Al*(exp(1/sqrt(Al)))^3/(((exp(1/sqrt(Al)))^4-1)*exp(x(j)/sqrt(Al)))-exp(x(j)/sqrt(Al))*Al*exp(1/sqrt(Al))/((exp(1/sqrt(Al)))^4-1)-6*exp(x/sqrt(Al))*Al^2*(exp(1/sqrt(Al)))^3/((exp(1/sqrt(Al)))^4-1)-exp(x/sqrt(Al))*Al*(exp(1/sqrt(Al)))^3/((exp(1/sqrt(Al)))^4-1)+6*Al^2*exp(1/sqrt(Al))/(((exp(1/sqrt(Al)))^4-1)*exp(x/sqrt(Al)))+Al*exp(1/sqrt(Al))/(((exp(1/sqrt(Al)))^4-1)*exp(x/sqrt(Al)))-Al*x^3/((exp(1/sqrt(Al)))^4-1)-6*Al^2*x/((exp(1/sqrt(Al)))^4-1)+(exp(1/sqrt(Al)))^4*Al*x^3/((exp(1/sqrt(Al)))^4-1)+6*(exp(1/sqrt(Al)))^4*Al^2*x/((exp(1/sqrt(Al)))^4-1);
 end
 
 yu=yu-yu(1)*h1-yu(end)*h2;

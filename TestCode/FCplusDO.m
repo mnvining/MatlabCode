@@ -8,10 +8,11 @@ function [AF,AD,DO]=FCplusDO(n,m,alpha)
 h=2/(n-1);
 ml=floor(m/2);
 xf=[-1:h:6-h]';
-nf=length(xf)
+nf=length(xf);
 AF=dftmtx(nf);
 AF=AF'/sqrt(nf);
 AF=AF(1:n,[1:ml+1,nf-ml+1:nf]);
+size(AF)
 DD=(2*pi/7)^2 * diag(-([[0:ml],[-ml:-1]]).^2);
 DO=(-alpha*DD+eye(m,m));
 DP=pinv(DO,1e-12);

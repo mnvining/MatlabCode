@@ -2,10 +2,10 @@ function GI= GreensInt(d,Al)
 syms x;
 if d==0
     GI=(1/2)*Al*(-exp((2*(2*x+1))/sqrt(Al))+exp((2*(x+2))/sqrt(Al))+2*exp((1+3*x)/sqrt(Al))-2*exp((x+3)/sqrt(Al))-exp(2*x/sqrt(Al))+exp(2/sqrt(Al)))*exp(-2*x/sqrt(Al))/(exp(4/sqrt(Al))-1)+(1/2)*Al*(exp((2*(2*x+1))/sqrt(Al))-2*exp((3*(x+1))/sqrt(Al))+exp((2*(x+2))/sqrt(Al))-exp(2*x/sqrt(Al))+2*exp((x+1)/sqrt(Al))-exp(2/sqrt(Al)))*exp(-2*x/sqrt(Al))/(exp(4/sqrt(Al))-1);
-elseif d==1
-    GI=Al*(exp(4/sqrt(Al))*x-x+exp(-(-3+x)/sqrt(Al))+exp(-(-1+x)/sqrt(Al))-exp((x+1)/sqrt(Al))-exp((x+3)/sqrt(Al)))/(exp(4/sqrt(Al))-1);
+elseif d==1  
+    GI=Al*(exp(4/sqrt(Al))*x-x+exp(-(x-3)/sqrt(Al))-exp((x+1)/sqrt(Al))-exp((3+x)/sqrt(Al))+exp(-(-1+x)/sqrt(Al)))/(exp(4/sqrt(Al))-1);
 elseif d==2
-    GI=2*(exp(1/sqrt(Al)))^4*Al^2/((exp(1/sqrt(Al)))^4-1)-2*Al^2*(exp(1/sqrt(Al)))^3/(((exp(1/sqrt(Al)))^4-1)*exp(x/sqrt(Al)))+2*exp(x/sqrt(Al))*Al^2*exp(1/sqrt(Al))/((exp(1/sqrt(Al)))^4-1)-Al*(exp(1/sqrt(Al)))^3/(((exp(1/sqrt(Al)))^4-1)*exp(x/sqrt(Al)))+exp(x/sqrt(Al))*Al*exp(1/sqrt(Al))/((exp(1/sqrt(Al)))^4-1)-Al*x^2/((exp(1/sqrt(Al)))^4-1)-2*exp(x/sqrt(Al))*Al^2*(exp(1/sqrt(Al)))^3/((exp(1/sqrt(Al)))^4-1)-exp(x/sqrt(Al))*Al*(exp(1/sqrt(Al)))^3/((exp(1/sqrt(Al)))^4-1)+2*Al^2*exp(1/sqrt(Al))/(((exp(1/sqrt(Al)))^4-1)*exp(x/sqrt(Al)))+Al*exp(1/sqrt(Al))/(((exp(1/sqrt(Al)))^4-1)*exp(x/sqrt(Al)))-2*Al^2/((exp(1/sqrt(Al)))^4-1)+(exp(1/sqrt(Al)))^4*Al*x^2/((exp(1/sqrt(Al)))^4-1);
+    GI=((-2*Al^2-Al)*exp(-(x-3)/sqrt(Al))+Al*(exp(4/sqrt(Al))*x^2+2*Al*exp(4/sqrt(Al))-2*Al*exp((3+x)/sqrt(Al))+2*Al*exp((x+1)/sqrt(Al))+2*Al*exp(-(-1+x)/sqrt(Al))-x^2-2*Al-exp((3+x)/sqrt(Al))+exp((x+1)/sqrt(Al))+exp(-(-1+x)/sqrt(Al))))/(exp(4/sqrt(Al))-1);
 elseif d==3
     GI=6*Al^2*(exp(1/sqrt(Al)))^3/(((exp(1/sqrt(Al)))^4-1)*exp(x/sqrt(Al)))-6*exp(x/sqrt(Al))*Al^2*exp(1/sqrt(Al))/((exp(1/sqrt(Al)))^4-1)+Al*(exp(1/sqrt(Al)))^3/(((exp(1/sqrt(Al)))^4-1)*exp(x/sqrt(Al)))-exp(x/sqrt(Al))*Al*exp(1/sqrt(Al))/((exp(1/sqrt(Al)))^4-1)-6*exp(x/sqrt(Al))*Al^2*(exp(1/sqrt(Al)))^3/((exp(1/sqrt(Al)))^4-1)-exp(x/sqrt(Al))*Al*(exp(1/sqrt(Al)))^3/((exp(1/sqrt(Al)))^4-1)+6*Al^2*exp(1/sqrt(Al))/(((exp(1/sqrt(Al)))^4-1)*exp(x/sqrt(Al)))+Al*exp(1/sqrt(Al))/(((exp(1/sqrt(Al)))^4-1)*exp(x/sqrt(Al)))-Al*x^3/((exp(1/sqrt(Al)))^4-1)-6*Al^2*x/((exp(1/sqrt(Al)))^4-1)+(exp(1/sqrt(Al)))^4*Al*x^3/((exp(1/sqrt(Al)))^4-1)+6*(exp(1/sqrt(Al)))^4*Al^2*x/((exp(1/sqrt(Al)))^4-1);
 elseif d==4

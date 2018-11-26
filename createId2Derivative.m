@@ -1,4 +1,4 @@
-function L2=createId2Derivative(N,M,Alpha,cl)
+function L2=createId2Derivative(ZZ,N,M,Alpha,cl)
 % function L2=createId2Derivative(N,M,Alpha,cl)
 % Inputs:   N, fine grid length [on original domain]
 %           M, half the # modes desired
@@ -8,13 +8,12 @@ function L2=createId2Derivative(N,M,Alpha,cl)
 
 
 fd=(cl+2)/2;
-ZZ=round(cl*N/2+N);
 LL=round(ZZ/2);
 
 K=-pi*1i*[0:LL-1,0,-(LL-1):-1]';
 
 % derivative coefficients pertaining to the FC
-n=[K(1:M);K((ZZ)-M+1:(ZZ))]/fd;
+n=[K(1:M+1);K((ZZ)-M+1:(ZZ))]/fd;
 
 
 L2=eye(length(n))-Alpha*diag(n.*n);
