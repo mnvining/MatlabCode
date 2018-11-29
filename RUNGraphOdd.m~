@@ -1,5 +1,5 @@
 
-function [stab,F1]=RUNGraphOdd(NG,Al,n,d,cl,NoMo,opt)
+function [stab]=RUNGraphOdd(NG,Al,n,d,cl,NoMo,opt)
     % uses NG grid points (int)
     % uses Al for alpha - should be a big float
     % n for number of coarse grid pts on -1,1 (int)
@@ -31,9 +31,9 @@ function [stab,F1]=RUNGraphOdd(NG,Al,n,d,cl,NoMo,opt)
     nfc=double(subs((-1)^opt*f,xcoarse)); 
     tots=[efff,(-1)^opt*efff];
     
-    M=2*floor(NoMo/2);
+    M=floor(NoMo/2);
   
-    ZZ=(cl*NG/2+NG)*2; % this is x2 because of repeated dom.
+    ZZ=(cl*NG/2+NG)*2;
     A=dftmtx(ZZ);
     A=A';
     A=A/sqrt(ZZ);
@@ -63,7 +63,7 @@ function [stab,F1]=RUNGraphOdd(NG,Al,n,d,cl,NoMo,opt)
     Sd_dag=pinv(Sd,1e-13);
     D_Dag=Vd*Sd_dag*Ud';
 
-    AugMat=[ACont1,zeros(NG,2);ACont2,zeros(NG,2);ACont1*D_Dag,Eh1f',Eh2f';ACont2*D_Dag,(-1)^opt*Eh1f',(-1)^opt*Eh2f'];
+    AugMat=[ACont1,zeros(NG,2);ACont2,zeros(NG,2);ACont1*D_Dag',Eh1f',Eh2f';ACont2*D_Dag',(-1)^opt*Eh1f',(-1)^opt*Eh2f'];
     
     AugVec=[ef';EGGf';(-1)^opt*EGGf'];
 
@@ -81,20 +81,20 @@ function [stab,F1]=RUNGraphOdd(NG,Al,n,d,cl,NoMo,opt)
     size(F1)
     disp('sizef1')
     figure(1)
-    plot(xall,F1,'b',xx,efforplot,'k',x2,(-1)^opt*efforplot,'r')
+    plot(xall,F1,'b',xx,efforplot,'k',x2,(-efforplot,'r')
     figure(2)
-    plot(xall,F1,'b',xx,efforplot,'k',x2,(-1)^opt*efforplot,'r')
+    plot(xall,F1,'b',xx,efforplot,'k',x2,-efforplot,'r')
     axis([-1 1 -5 5])
     figure(3)
-    U1_1=real(ACont1*D_Dag*Cin+Res(end-1)*Eh1f'+Res(end)*Eh2f');
-    U1_2=real(ACont2*D_Dag*Cin+(-1)^opt*Res(end-1)*Eh1f'+(-1)^opt*Res(end)*Eh2f');
+    U1_1=real(ACont1*D_Dag'*Cin+Res(end-1)*Eh1f'+Res(end)*Eh2f');
+    U1_2=real(ACont2*D_Dag'*Cin-Res(end-1)*Eh1f'-Res(end)*Eh2f');
     size(U1_1)
     plot(xx,U1_1,'b',x2,U1_2,'b')%,xx,EGGf,'k',x2,-EGGf,'r')
     %hold on
     axis([-1 13 -5 5])
     % coarse grid things
     LD=round(NG/(n-1));
-    solcoarse=U1_1([1:LD:NG]);
+    %solcoarse=U1([1:LD:NG]);
     %plot(xcoarse,solcoarse,'ro','MarkerSize',5)
     %figure(2)
     %hold on
@@ -105,8 +105,8 @@ function [stab,F1]=RUNGraphOdd(NG,Al,n,d,cl,NoMo,opt)
     
     
 
-    stab=norm(solcoarse)/norm(efff);
+    %stab=norm(solcoarse)/norm(efff);
     %stab2=norm([EGGf(1:LD:end),-EGGf(1:LD:end)])/norm(tots);
-    %stab=1;
+    stab=1;
 
 end

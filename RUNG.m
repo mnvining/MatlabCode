@@ -84,8 +84,10 @@ function [stab,acc,acc2,AugMat,Eh1f,Eh2f]=RUNG(NG,Al,n,d,cl,NoMo,lambda,opt)
     %figure(91)
     %semilogy(abs(U1-EGGf'))
     %title('norm uc greens')
+    greenscoarse=EGGf(1:LD:end);
+    %norm(greenscoarse)/norm(efff)
   
-    stab=norm(solcoarse)/norm(efff);
+    stab=norm(solcoarse)/norm(greenscoarse);
 end
 
 
