@@ -1,5 +1,5 @@
 
-function [stab,F1,U1,d1,d2]=RUNGraphOdd(NG,Al,n,d,cl,NoMo,opt)
+function [F1,Cin]=RUNGraphOdd(NG,Al,n,d,cl,NoMo,opt)
     % uses NG grid points (int)
     % uses Al for alpha - should be a big float
     % n for number of coarse grid pts on -1,1 (int)
@@ -54,9 +54,6 @@ function [stab,F1,U1,d1,d2]=RUNGraphOdd(NG,Al,n,d,cl,NoMo,opt)
     % calculate B(f)
     [EGGf,Eh1f,Eh2f]=BCoeffCalc(xx,xcoarse,Al,d);
 
-%     D=createId2Derivative(NG,M,Al,cl);
-
-    
     % this calculates D_Dag for use in operator    
     [Ud,Sd,Vd]=svd(D);
     Sd_dag=pinv(Sd,1e-13);
@@ -76,12 +73,7 @@ function [stab,F1,U1,d1,d2]=RUNGraphOdd(NG,Al,n,d,cl,NoMo,opt)
     size(A)
     
     F1=real(A*Cin);
-    %figure(1)
-    %plot(xall,F1,'b',xx,efforplot,'k',x2,(-1)^opt*efforplot,'r')
-    %figure(2)
-    %plot(xall,F1,'b',xx,efforplot,'k',x2,(-1)^opt*efforplot,'r')
-    %axis([-1 1 -5 5])
-    %figure(3)
+    
     U1=real(A*D_Dag'*Cin);
     U1_1=real(ACont1*D_Dag'*Cin+Res(end-1)*Eh1f'+Res(end)*Eh2f');
     U1_2=real(ACont2*D_Dag'*Cin+(-1)^opt*Res(end-1)*Eh1f'+(-1)^opt*Res(end)*Eh2f');
