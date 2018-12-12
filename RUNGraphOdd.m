@@ -1,5 +1,5 @@
 
-function [F1,Cin]=RUNGraphOdd(NG,Al,n,d,cl,NoMo,opt)
+function [A,F1,Cin]=RUNGraphOdd(NG,Al,n,d,cl,NoMo,opt)
     % uses NG grid points (int)
     % uses Al for alpha - should be a big float
     % n for number of coarse grid pts on -1,1 (int)
@@ -14,7 +14,6 @@ function [F1,Cin]=RUNGraphOdd(NG,Al,n,d,cl,NoMo,opt)
     h=xx(2)-xx(1);
     x2=6:h:1+cl+2-h;
     xall=-1:h:1+2*cl+2-h;
-    length(xall)
     xcoarse1=linspace(-1,1,n);
     xcoarse2=linspace(6,8,n);
     xcoarse=xcoarse1(1:end-1);
@@ -69,25 +68,16 @@ function [F1,Cin]=RUNGraphOdd(NG,Al,n,d,cl,NoMo,opt)
     Res=V*(Sdag*(U'*AugVec));
     
     Cin=Res(1:end-2);
-    size(Cin)
-    size(A)
     
     F1=real(A*Cin);
     
     U1=real(A*D_Dag'*Cin);
     U1_1=real(ACont1*D_Dag'*Cin+Res(end-1)*Eh1f'+Res(end)*Eh2f');
     U1_2=real(ACont2*D_Dag'*Cin+(-1)^opt*Res(end-1)*Eh1f'+(-1)^opt*Res(end)*Eh2f');
-    size(U1_1)
-    %plot(xx,U1_1,'b',x2,U1_2,'b')%,xx,EGGf,'k',x2,-EGGf,'r')
-    %hold on
-    %axis([-1 13 -5 5])
-    % coarse grid things
+
     LD=round(NG/(n-1));
     solcoarse=U1_1([1:LD:NG]);
-    %plot(xcoarse,solcoarse,'ro','MarkerSize',5)
-    %figure(2)
-    %hold on
-    %plot(xcoarse,F1(1:LD:NG),'ro','MarkerSize',6)
+
     
     norm(F1(1:NG)-real(ACont1*Cin))
     
@@ -97,7 +87,5 @@ function [F1,Cin]=RUNGraphOdd(NG,Al,n,d,cl,NoMo,opt)
     
 
     stab=norm(solcoarse)/norm(efff);
-    %stab2=norm([EGGf(1:LD:end),-EGGf(1:LD:end)])/norm(tots);
-    %stab=1;
 
 end
