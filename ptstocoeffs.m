@@ -7,12 +7,11 @@ function C=ptstocoeffs(x,y,d)
 % outputs: c - coefficients c_0,c_1... corresponding to the Gram Polys.
 
 % Uses 0 - d.
-p=zeros(length(x),d+1);
-for i=1:length(x)
-    for j=0:d
-        p(i,j+1)=evalgp(x(i),j,9);
-    end
-end
+
+
+% loads the even coefficients for degrees 0:8
+load('EvenCo.mat')
+p=EvenCo(1:8,1:d+1)
 size(p)
 size(y)
 C=p\y;

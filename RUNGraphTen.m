@@ -1,5 +1,5 @@
 
-function [AugMat,A,F1,Cin]=RUNGraphOdd(NG,Al,n,d,cl,NoMo,opt)
+function [AugMat,A,F1,Cin]=RUNGraphTen(NG,Al,n,d,cl,NoMo,opt)
     % uses NG grid points (int)
     % uses Al for alpha - should be a big float
     % n for number of coarse grid pts on -1,1 (int)
@@ -12,22 +12,21 @@ function [AugMat,A,F1,Cin]=RUNGraphOdd(NG,Al,n,d,cl,NoMo,opt)
     xx=linspace(-1,1,NG+1);
     xx=xx(1:end-1);
     h=xx(2)-xx(1);
-    x2=6:h:1+cl+2-h;
-    xall=-1:h:1+2*cl+2-h;
+    x2=6:h:1+cl+2;
+    xall=-1:h:1+2*cl+2;
     xcoarse1=linspace(-1,1,n);
     xcoarse2=linspace(6,8,n);
-    xcoarse=xcoarse1(1:end-1);
-    xcoarse2=xcoarse2(1:end-1);
-    hh=xcoarse(2)-xcoarse(1);
-    xcoarseext=-1:hh:1+cl+2-hh;
-    f=fmaker(d,n);
+    hh=xcoarse1(2)-xcoarse1(1);
+    xcoarseext=-1:hh:1+cl+2;
+    f=fmaker2(d,n);
     ef=double(subs(f,xx));
+    plot(xx,ef);
     ef2=double(subs((-1)^opt*f,xx));
     ef=[ef ef2];
     efforplot=double(subs(f,xx));
     ef2forplot=double(subs((-1)^opt*f,xx));
-    efff=double(subs(f,xcoarse));
-    nfc=double(subs((-1)^opt*f,xcoarse)); 
+    efff=double(subs(f,xcoarse1));
+    nfc=double(subs((-1)^opt*f,xcoarse2)); 
     tots=[efff,nfc];
     
     M=2*floor(NoMo/2);% this is x2 because we need double modes
@@ -51,13 +50,16 @@ function [AugMat,A,F1,Cin]=RUNGraphOdd(NG,Al,n,d,cl,NoMo,opt)
     D=(eye(length(p))-Al*diag(p.*p));
     
     % calculate B(f)
-    [EGGf,Eh1f,Eh2f]=BCoeffCalc2(xx,xcoarse,Al,d);
-    plot(EGGf)
+    [EGGf,Eh1f,Eh2f]=BCoeffCalc2(xx,xcoarse1,Al,d);
 
     % this calculates D_Dag for use in operator    
     [Ud,Sd,Vd]=svd(D);
     Sd_dag=pinv(Sd,1e-13);
     D_Dag=Vd*Sd_dag*Ud';
+    
+    
+    size(ACont1)
+    size(Eh1f')
 
     AugMat=[ACont1,zeros(NG,2);ACont2,zeros(NG,2);ACont1*D_Dag,Eh1f',Eh2f';ACont2*D_Dag,(-1)^opt*Eh1f',(-1)^opt*Eh2f'];
     
