@@ -1,4 +1,4 @@
-function C=ptstocoeffs(x,y,d)
+function C=ptstocoeffs2(x,y,d)
 % function C=ptstocoeffs(x,y)
 % calculates the coefficients of the gram polynomial expansion for the
 % points (x,y).
@@ -10,8 +10,8 @@ function C=ptstocoeffs(x,y,d)
 
 
 % loads the even coefficients for degrees 0:8
-load('EvenCo.mat')
-p=EvenCo(1:8,1:d+1);
+load('EvenCo10.mat')
+p=EvenCo10(1:10,1:d+1);
 C=p\y;
 
     
