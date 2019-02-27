@@ -10,8 +10,8 @@ function C=ptstocoeffs2(x,y,d)
 
 
 % loads the even coefficients for degrees 0:8
-load('EvenCo10.mat')
-p=EvenCo10(1:10,1:d+1);
-C=p\y;
+load('EvenCo10Stab.mat')
+p=EN3FCEven(1:10,1:d+1);
+C=p\y
 
     

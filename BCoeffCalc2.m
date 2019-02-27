@@ -1,6 +1,6 @@
 function [EGGf,Eh1f,Eh2f]=BCoeffCalc2(Fine_Grid,Coarse_Grid,Al,d)
 syms x;
-n=length(Coarse_Grid)
+n=length(Coarse_Grid);
 GG(x)=totalGreen2(d,n+1,Al,Fine_Grid);
 [h1,h2]=hsol(Fine_Grid,Al);
 

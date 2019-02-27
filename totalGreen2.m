@@ -8,5 +8,5 @@ p=Fine_Grid(end);
         m(x)=GreensIntInc(j-1,Al,p);
         expr=expr+zz(j)*m(x);
     end
-    Gf= expr;
+    Gf=expr;
 end
