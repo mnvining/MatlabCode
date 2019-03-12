@@ -11,7 +11,6 @@ LD=round(NG/(n-1)+1);
 
 f=fmaker(d,n);
 ef=double(subs(f,xx));
-plot(ef)
 efff=double(subs(f,xcoarse));
 
 M=floor(NoMo/2);% this is x2 because we need double modes
@@ -21,9 +20,9 @@ A=dftmtx(ZZ);
 A=A';
 A=A/sqrt(ZZ);
 if mod(NoMo,2)==0
-    Modes=[1:M+1,ZZ-M+2:ZZ];
+    Modes=[1:M,ZZ-M+1:ZZ];
 else
-    Modes=[1:(M+1),(ZZ-M+1):ZZ];
+    Modes=[1:M,(ZZ-M):ZZ];
 end
 
 %% Fix: modes are off so you aren't deleting the right modes
@@ -43,10 +42,11 @@ LL=round(ZZ/2);
 K=-pi*1i*[0:LL-1,0,-(LL-1):-1]';
 fd=(cl+2)/2;
 if mod(NoMo,2)==0
-    p=[K(1:(M+1));K((ZZ)-M+2:(ZZ))]/fd;
+    p=[K(1:(M));K((ZZ)-M+1:(ZZ))];
 else   
-    p=[K(1:(M+1));K((ZZ)-M+1:(ZZ))]/fd;
+    p=[K(1:(M));K((ZZ)-M:(ZZ))];
 end
+p=p/fd;
 
 D=(eye(length(p))-Al*diag(p.*p));
 
@@ -59,39 +59,47 @@ Sd_dag=pinv(Sd,1e-13);
 D_Dag=Vd*Sd_dag*Ud';
 
 %AugMat=[ACont1,zeros(NG,2);ACont2,zeros(NG,2);ACont1*D_Dag,Eh1f',Eh2f';ACont2*D_Dag,(-1)^opt*Eh1f',(-1)^opt*Eh2f'];
-AugMat=[ACont1,zeros(NG,2);ACont1*D_Dag,Eh1f',Eh2f'];
+AugMat=[0*ACont1,zeros(NG,2);ACont1*D_Dag,Eh1f',Eh2f'];
 
 size(AugMat)
 
 if opt==0
+    % delete odd modes
     if mod(NoMo,2)==0
-        AugMat(:,[2:2:M+1,M+2:2:end-2])=[];
+        % even # of modes
+        AugMat(:,[2:2:M,M+1:2:end-2])=[];
     else
+       % odd # of modes
         AugMat(:,[2:2:M+1,M+2:2:end-2])=[];
     end
 else
+    % delete even modes
     if mod(NoMo,2)==0
+        % even # of modes
         AugMat(:,[1:2:M,M+2:2:end-2])=[];
     else
+        % odd # of modes
         AugMat(:,[1:2:M,M+3:2:end-2])=[];
     end
 end
 
 
 
-AugVec=[ef';EGGf'];
+AugVec=[0*ef';EGGf'];
 
 
-[U,S,V]=svd(AugMat);
-Sdag=pinv(S,1e-13);
-Res=V*(Sdag*(U'*AugVec));
+% [U,S,V]=svd(AugMat);
+% Sdag=pinv(S,1e-13);
+% Res=V*(Sdag*(U'*AugVec));
+
+Res=AugMat\AugVec;
 
 
 Cin=Res(1:end-2);
 Res(end-1:end)
 if opt == 0
     if mod(NoMo,2)==0
-        A(:,[2:2:M+1,M+3:2:end])=[];
+        A(:,[2:2:M,M+1:2:end])=[];
     else
         A(:,[2:2:M+1,M+2:2:end])=[];
     end
@@ -105,7 +113,7 @@ end
 
 if opt == 0
     if mod(NoMo,2)==0
-        ACont1(:,[2:2:M+1,M+3:2:end])=[];
+        ACont1(:,[2:2:M,M+1:2:end])=[];
     else
         ACont1(:,[2:2:M+1,M+2:2:end])=[];
     end
@@ -118,7 +126,7 @@ else
 end
 if opt == 0
     if mod(NoMo,2)==0
-        D_Dag([2:2:M+1,M+3:2:end],:)=[];
+        D_Dag([2:2:M,M+1:2:end],:)=[];
     else
         D_Dag([2:2:M+1,M+2:2:end],:)=[];
     end
@@ -132,7 +140,7 @@ end
 
 if opt == 0
     if mod(NoMo,2)==0
-        D_Dag(:,[2:2:M+1,M+3:2:end])=[];
+        D_Dag(:,[2:2:M,M+1:2:end])=[];
     else
         D_Dag(:,[2:2:M+1,M+2:2:end])=[];
     end
@@ -163,8 +171,10 @@ solcoarse=U1_1([1:LD:NG]);
 
 
 %norm(F1(1:NG)-real(ACont1*Cin),'inf')
+fG=ef';
 
-d1=norm(F1(1:NG)-ef(1:NG)','inf');
+d1=norm(F1(1:NG)-fG(1:NG),'inf')
+d2=norm(U1a-EGGf','inf')
 %
 %
 %
