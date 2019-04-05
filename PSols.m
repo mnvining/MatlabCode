@@ -1,0 +1,22 @@
+function s=PSols(d,Al)
+if d==0
+    s=@(x) x.^0;
+elseif d==1
+    s=@(x) x.^1;
+elseif d==2
+    s=@(x) x.^2+2*Al;
+elseif d==3
+    s=@(x) x.^3+6*Al*x;
+elseif d==4
+    s=@(x) x.^4+12*Al*x.^2+24*Al^2;
+elseif d==5
+    s=@(x) x.^5+20*Al*x.^3+120*Al^2*x;
+elseif d==6
+    s=@(x) x.^6+30*Al*x.^4+360*Al^2*x.^2+720*Al^3;
+elseif d==7
+    s=@(x) x.^7+42*Al*x.^5+840*Al^2*x.^3+5040*Al^3*x;
+elseif d==8
+    s=@(x) x.^8+56*Al*x.^6+1680*Al^2*x.^4+20160*Al^3*x.^2+40320*Al^4;
+elseif d==9
+    s=@(x) x.^9+72*Al*x.^7+3024*Al^2*x.^5+60480*Al^3*x.^3+362880*Al^4*x;
+end
